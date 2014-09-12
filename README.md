@@ -5,7 +5,7 @@ ngCapsLock is a module for [AngularJS](http://angularjs.org/) to detect if caps-
 Getting Started
 ---------------
 
- * Download ngCapsLock or install it with [Bower](http://bower.io/) via `bower install ngCapsLock`
+ * Download ngCapsLock or install it with [Bower](http://bower.io/) via `bower install ng-caps-lock`
  * Include the script tag on your page after the AngularJS script tags
 
         <script type='text/javascript' src='path/to/angular.min.js'></script>
