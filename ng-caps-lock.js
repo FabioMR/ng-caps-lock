@@ -1,4 +1,4 @@
-angular.module('ngCapsLock', []).run(function ($rootScope, $document) {
+angular.module('ngCapsLock', []).run(function ($rootScope, $document, $timeout) {
 
   var bindingForAppleDevice = function () {
     $document.bind("keydown", function (event) {
@@ -48,8 +48,9 @@ angular.module('ngCapsLock', []).run(function ($rootScope, $document) {
   }
 
   var setCapsLockOn = function (isOn) {
-    $rootScope.isCapsLockOn = isOn;
-    $rootScope.$apply();
+    $timeout(function() {
+      $rootScope.isCapsLockOn = isOn;
+    });
   };
 
 });
