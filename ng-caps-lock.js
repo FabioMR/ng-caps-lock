@@ -1,56 +1,61 @@
-angular.module('ngCapsLock', []).run(function ($rootScope, $document, $timeout) {
+(function () {
+  'use strict';
 
-  var bindingForAppleDevice = function () {
-    $document.bind("keydown", function (event) {
-      if (event.keyCode === 20) { setCapsLockOn(true); };
-    });
+  angular.module('ngCapsLock', []).run(['$rootScope', '$document', '$timeout', function ($rootScope, $document, $timeout) {
 
-    $document.bind("keyup", function (event) {
-      if (event.keyCode === 20) { setCapsLockOn(false); };
-    });
+    var bindingForAppleDevice = function () {
+      $document.bind("keydown", function (event) {
+        if (event.keyCode === 20) { setCapsLockOn(true); }
+      });
 
-    $document.bind("keypress", function (event) {
-      var code = event.charCode || event.keyCode;
-      var shift = event.shiftKey;
+      $document.bind("keyup", function (event) {
+        if (event.keyCode === 20) { setCapsLockOn(false); }
+      });
 
-      if (code > 96 && code < 123) { setCapsLockOn(false); }
-      if (code > 64 && code < 91 && !shift) { setCapsLockOn(true); }
-    });
-  }
+      $document.bind("keypress", function (event) {
+        var code = event.charCode || event.keyCode;
+        var shift = event.shiftKey;
 
-  var bindingForOthersDevices = function () {
-    var isKeyPressed = true;
+        if (code > 96 && code < 123) { setCapsLockOn(false); }
+        if (code > 64 && code < 91 && !shift) { setCapsLockOn(true); }
+      });
+    };
 
-    $document.bind("keydown", function (event) {
-      if (!isKeyPressed && event.keyCode === 20) {
-        isKeyPressed = true;
-        if ($rootScope.isCapsLockOn != null) { setCapsLockOn(!$rootScope.isCapsLockOn); };
-      };
-    });
+    var bindingForOthersDevices = function () {
+      var isKeyPressed = true;
 
-    $document.bind("keyup", function (event) {
-      if (event.keyCode === 20) { isKeyPressed = false; };
-    });
+      $document.bind("keydown", function (event) {
+        if (!isKeyPressed && event.keyCode === 20) {
+          isKeyPressed = true;
+          if ($rootScope.isCapsLockOn != null) { setCapsLockOn(!$rootScope.isCapsLockOn); }
+        }
+      });
 
-    $document.bind("keypress", function (event) {
-      var code = event.charCode || event.keyCode;
-      var shift = event.shiftKey;
+      $document.bind("keyup", function (event) {
+        if (event.keyCode === 20) { isKeyPressed = false; }
+      });
 
-      if (code > 96 && code < 123) { setCapsLockOn(shift); }
-      if (code > 64 && code < 91) { setCapsLockOn(!shift); }
-    });
-  }
+      $document.bind("keypress", function (event) {
+        var code = event.charCode || event.keyCode;
+        var shift = event.shiftKey;
 
-  if (/Mac|iPad|iPhone|iPod/.test(navigator.platform)) {
-    bindingForAppleDevice();
-  } else {
-    bindingForOthersDevices();
-  }
+        if (code > 96 && code < 123) { setCapsLockOn(shift); }
+        if (code > 64 && code < 91) { setCapsLockOn(!shift); }
+      });
+    };
 
-  var setCapsLockOn = function (isOn) {
-    $timeout(function() {
-      $rootScope.isCapsLockOn = isOn;
-    });
-  };
+    if (/Mac|iPad|iPhone|iPod/.test(navigator.platform)) {
+      bindingForAppleDevice();
+    } else {
+      bindingForOthersDevices();
+    }
 
-});
+    var setCapsLockOn = function (isOn) {
+      $timeout(function () {
+        $rootScope.isCapsLockOn = isOn;
+      });
+    };
+
+  }]);
+
+}());
