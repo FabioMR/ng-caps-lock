@@ -40,7 +40,7 @@
       });
 
       $document.bind("keyup", function (event) {
-        if (event.keyCode === 20) { isKeyPressed = false; }
+        if (event.keyCode === 20) { isKeyPressed = false; setCapsLockOn(!$rootScope.isCapsLockOn); }
       });
 
       $document.bind("keypress", function (event) {
