@@ -1,12 +1,12 @@
 (function () {
   'use strict';
 
-  angular.module('ngCapsLock', []).run(['$rootScope', '$document', '$window', '$timeout' function ($rootScope, $document, $window, $timeout) {
+  angular.module('ngCapsLock', []).run(['$rootScope', '$document', '$window', '$timeout', function ($rootScope, $document, $window, $timeout) {
     function setCapsLockOn (isOn) {
       $timeout(function() {
         $rootScope.isCapsLockOn = isOn;
       });
-    };
+    }
 
     function bindingForAppleDevice () {
       $document.bind("keydown", function (event) {
